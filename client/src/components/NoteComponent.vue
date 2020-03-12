@@ -1,25 +1,45 @@
 <template>
   <div class="container">
-    <h1>Notes</h1>
-    <div class="create-note">
-      <label for="create-note">Write a note...</label>
-      <input type="text" id="create-note" v-model="title" placeholder="Title">
-      <input type="text" id="create-note" v-model="text" placeholder="Text">
-      <button v-on:click="createNote">Create!</button>
+    <h1 class="title">Note-Me</h1>
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <div class="form box">
+          <label class="label">Write a note</label>
+          <div class="field">
+            <div class="control">
+              <input class="input" type="text"  id="create-note" v-model="title" placeholder="Title">
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <input class="input" type="text" id="create-note" v-model="text" placeholder="Take a note...">
+            </div>
+          </div>
+          <div class="field">
+            <button class="button" v-on:click="createNote">Save</button>
+          </div>
+        </div>
+      </div>
     </div>
+
     <hr>
+
     <p class="error" v-if="error">{{ error }}</p>
-    <div class="notes-container">
-      <div class="note"
+    <div class="columns is-flex-tablet">
+      <div class="column"
       v-for="(note, index) in notes"
       v-bind:item="note"
       v-bind:index="index"
       v-bind:key="note._id"
       v-on:dblclick="deleteNote(note._id)"
       >
-        {{ `${note.createdAt.getDate()}/${note.createdAt.getMonth()}/${note.createdAt.getFullYear()}` }}
-        <p class="title">{{ note.title }}</p>
-        <p class="text">{{ note.text }}</p>
+        <div class="box">
+          <p class="title">{{ note.title }}</p>
+          <p class="text">{{ note.text }}</p>
+          <div class="is-size-7 is-pulled-right">
+            {{ `${note.createdAt.getDate()}/${note.createdAt.getMonth()}/${note.createdAt.getFullYear()}` }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -49,6 +69,8 @@ export default {
     async createNote() {
       await NoteService.inserNote(this.title, this.text);
       this.notes = await NoteService.getNotes();
+      this.title = '';
+      this.text = '';
     },
     async deleteNote(id) {
       await NoteService.deleteNote(id);
@@ -60,45 +82,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-div.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
 
-p.error {
-  border: 1px solid #ff5b5f;
-  background-color: #ffc5c1;
-  padding: 10px;
-  margin-bottom: 15px;
-}
-
-div.note {
-  display: flexbox;
-  position: relative;
-  max-width: 200px;
-  border: 1px solid #5bd658;
-  background-color: 3bcffb8;
-  padding: 10px 10px 30px 10px;
-  margin-bottom: 15px;
-}
-
-div.created-at {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 5px 15px 5px 15px;
-  background-color: darkgreen;
-}
-
-p.title {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 0;
-}
-
-p.text {
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 0;
-}
 </style>
