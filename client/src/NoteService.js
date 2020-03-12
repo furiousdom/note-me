@@ -1,0 +1,38 @@
+import axios from 'axios';
+
+const url = 'http://localhost:5000/api/notes/';
+
+class NoteService {
+  static getNotes() {
+    /* eslint-disable no-async-promise-executor */
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(url);
+        const data = res.data;
+        resolve(
+          data.map(note => ({
+            ...note,
+            createdAt: new Date(note.createdAt)
+          }))
+        );
+      } catch (err) {
+        reject(err);
+      }
+    });
+    /* eslint-disable no-async-promise-executor */
+  }
+
+  static inserNote(title, text) {
+    return axios.post(url, {
+      title,
+      text
+    });
+  }
+
+  static deleteNote(id) {
+    return axios.delete(`${url}${id}`);
+  }
+
+}
+
+export default NoteService;
