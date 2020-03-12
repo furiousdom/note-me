@@ -31,9 +31,9 @@
       v-bind:item="note"
       v-bind:index="index"
       v-bind:key="note._id"
-      v-on:dblclick="deleteNote(note._id)"
       >
         <div class="box">
+          <a class="delete is-pulled-right" v-on:click="deleteNote(note._id)"></a>
           <p class="title">{{ note.title }}</p>
           <p class="text">{{ note.text }}</p>
           <div class="is-size-7 is-pulled-right">
