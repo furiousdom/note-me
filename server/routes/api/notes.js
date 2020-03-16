@@ -25,11 +25,11 @@ router.delete('/:id', async (req, res) => {
 });
 
 async function loadNotesCollection() {
-  const client  = await mongodb.MongoClient.connect(
+  const client = await mongodb.MongoClient.connect(
     'mongodb+srv://dtabak:dTabak1234@testclust-sezet.mongodb.net/test?retryWrites=true&w=majority',
-    { useNewUrlParser: true });
+    { useNewUrlParser: true, useUnifiedTopology: true });
 
-    return client.db('notesdb').collection('notes');
+  return client.db('notesdb').collection('notes');
 }
 
 module.exports = router;

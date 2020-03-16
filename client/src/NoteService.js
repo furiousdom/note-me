@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5000/api/notes/';
+const url = 'api/notes/';
 
 class NoteService {
   static getNotes() {
