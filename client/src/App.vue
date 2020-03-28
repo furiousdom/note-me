@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import NoteComponent from './components/NoteComponent.vue'
+import NoteComponent from './components/Note.vue'
 
 export default {
   name: 'App',

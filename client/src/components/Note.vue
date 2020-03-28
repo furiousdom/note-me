@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import NoteService from '../NoteService';
+import NoteService from '../api/note';
 
 export default {
   name: 'NoteComponent',
