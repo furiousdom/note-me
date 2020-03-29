@@ -7,12 +7,12 @@
           <label class="label">Write a note</label>
           <div class="field">
             <div class="control">
-              <input class="input" type="text"  id="create-note" v-model="title" placeholder="Title">
+              <input class="input" type="text"  id="create-note1" v-model="title" placeholder="Title" />
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <input class="input" type="text" id="create-note" v-model="text" placeholder="Take a note...">
+              <input class="input" type="text" id="create-note2" v-model="text" placeholder="Take a note..." />
             </div>
           </div>
           <div class="field">

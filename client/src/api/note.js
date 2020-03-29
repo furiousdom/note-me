@@ -32,7 +32,6 @@ class NoteService {
   static deleteNote(id) {
     return axios.delete(`${url}${id}`);
   }
-
 }
 
 export default NoteService;
