@@ -1,6 +1,7 @@
-const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const express = require('express');
+const notes = require('./routes/api/notes');
 const path = require('path');
 
 const app = express();
@@ -8,7 +9,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const notes = require('./routes/api/notes');
 app.use('/api/notes', notes);
 
 if (process.env.NODE_ENV === 'production') {

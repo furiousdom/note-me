@@ -19,10 +19,9 @@ class NoteService {
         reject(err);
       }
     });
-    /* eslint-disable no-async-promise-executor */
   }
 
-  static inserNote(title, text) {
+  static insertNote(title, text) {
     return axios.post(url, {
       title,
       text

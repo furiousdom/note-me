@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import NoteComponent from './components/Note.vue'
+import NoteComponent from './components/Note.vue';
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
     NoteComponent
   }
-}
+};
 </script>
 
 <style>
