@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="field">
-            <button @click="createNote" class="button">Save</button>
+            <button @click="addNote" class="button">Save</button>
           </div>
         </div>
       </div>
@@ -57,15 +57,24 @@ export default {
     formatDate(date) {
       return format(date, 'dd/MM/yyyy');
     },
-    async createNote() {
-      await NoteServices.insertNote(this.title, this.text);
-      this.notes = await NoteServices.getNotes();
+    createNote({ _id, title, text, createdAt: date }) {
+      const newNote = {
+        _id,
+        title,
+        text,
+        createdAt: new Date(date)
+      };
+      return newNote;
+    },
+    async addNote() {
+      const { data } = await NoteServices.insertNote(this.title, this.text);
+      this.notes.push(this.createNote(data));
       this.title = '';
       this.text = '';
     },
     async deleteNote(id) {
       await NoteServices.deleteNote(id);
-      this.notes = await NoteServices.getNotes();
+      this.notes.pop();
     }
   },
   async created() {

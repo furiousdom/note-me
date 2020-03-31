@@ -1,10 +1,23 @@
+const { dbName, MongoURI } = require('./config/keys');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
+const mongoose = require('mongoose');
 const notes = require('./routes/api/notes');
 const path = require('path');
 
 const app = express();
+
+const db = MongoURI;
+const dbConfig = {
+  dbName,
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+};
+
+mongoose.connect(db, dbConfig)
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));
 
 app.use(bodyParser.json());
 app.use(cors());
