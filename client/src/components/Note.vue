@@ -55,7 +55,7 @@ export default {
   }),
   methods: {
     formatDate(date) {
-      return format(date, 'dd/MM/yyyy');
+      return format(date, 'MMM do, yyyy');
     },
     createNote({ _id, title, text, createdAt: date }) {
       const newNote = {
