@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import { deleteNote, getNotes, insertNote } from '../api/note';
 import { format } from 'date-fns';
+import NoteServices from '../api/note';
 
 export default {
   name: 'note-component',
@@ -58,18 +58,18 @@ export default {
       return format(date, 'dd/MM/yyyy');
     },
     async createNote() {
-      await insertNote(this.title, this.text);
-      this.notes = await getNotes();
+      await NoteServices.insertNote(this.title, this.text);
+      this.notes = await NoteServices.getNotes();
       this.title = '';
       this.text = '';
     },
     async deleteNote(id) {
-      await deleteNote(id);
-      this.notes = await getNotes();
+      await NoteServices.deleteNote(id);
+      this.notes = await NoteServices.getNotes();
     }
   },
   async created() {
-    this.notes = await getNotes();
+    this.notes = await NoteServices.getNotes();
   }
 };
 </script>
