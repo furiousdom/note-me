@@ -1,14 +1,12 @@
-import axios from 'axios';
+import api from './axios';
+const endpoint = 'notes/';
 
-const url = 'api/notes/';
-
-class NoteService {
-  static getNotes() {
+export default {
+  getNotes() {
     /* eslint-disable no-async-promise-executor */
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(url);
-        const data = res.data;
+        const { data } = await api.get(endpoint);
         resolve(
           data.map(note => ({
             ...note,
@@ -19,18 +17,11 @@ class NoteService {
         reject(err);
       }
     });
+  },
+  insertNote(title, text) {
+    return api.post(endpoint, { title, text });
+  },
+  deleteNote(id) {
+    return api.delete(`${endpoint}${id}`);
   }
-
-  static insertNote(title, text) {
-    return axios.post(url, {
-      title,
-      text
-    });
-  }
-
-  static deleteNote(id) {
-    return axios.delete(`${url}${id}`);
-  }
-}
-
-export default NoteService;
+};

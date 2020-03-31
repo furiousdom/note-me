@@ -7,12 +7,12 @@
           <label class="label">Write a note</label>
           <div class="field">
             <div class="control">
-              <input v-model="title" id="create-note1" class="input" type="text" placeholder="Title">
+              <input v-model="title" type="text" placeholder="Title" class="input">
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <input v-model="text" id="create-note2" class="input" type="text" placeholder="Take a note...">
+              <input v-model="text" type="text" placeholder="Take a note..." class="input">
             </div>
           </div>
           <div class="field">
@@ -27,18 +27,14 @@
     <p v-if="error" class="error">{{ error }}</p>
     <div class="columns is-flex-tablet">
       <div
-        v-for="(note, index) in notes"
-        :key="note._id"
-        :item="note"
-        :index="index"
+        v-for="({ _id, title, text, createdAt:date }) in notes"
+        :key="_id"
         class="column">
         <div class="box">
-          <a @click="deleteNote(note._id)" class="delete is-pulled-right"></a>
-          <p class="title">{{ note.title }}</p>
-          <p class="text">{{ note.text }}</p>
-          <div class="is-size-7 is-pulled-right">
-            {{ `${note.createdAt.getDate()}/${note.createdAt.getMonth()}/${note.createdAt.getFullYear()}` }}
-          </div>
+          <a @click="deleteNote(_id)" class="delete is-pulled-right"></a>
+          <p class="title">{{ title }}</p>
+          <p class="text">{{ text }}</p>
+          <div class="is-size-7 is-pulled-right">{{ formatDate(date) }}</div>
         </div>
       </div>
     </div>
@@ -46,41 +42,34 @@
 </template>
 
 <script>
-import NoteService from '../api/note';
+import { deleteNote, getNotes, insertNote } from '../api/note';
+import { format } from 'date-fns';
 
 export default {
   name: 'note-component',
-  data() {
-    return {
-      notes: [],
-      error: '',
-      title: '',
-      text: ''
-    };
-  },
+  data: () => ({
+    notes: [],
+    error: '',
+    title: '',
+    text: ''
+  }),
   methods: {
+    formatDate(date) {
+      return format(date, 'dd/MM/yyyy');
+    },
     async createNote() {
-      await NoteService.insertNote(this.title, this.text);
-      this.notes = await NoteService.getNotes();
+      await insertNote(this.title, this.text);
+      this.notes = await getNotes();
       this.title = '';
       this.text = '';
     },
     async deleteNote(id) {
-      await NoteService.deleteNote(id);
-      this.notes = await NoteService.getNotes();
+      await deleteNote(id);
+      this.notes = await getNotes();
     }
   },
   async created() {
-    try {
-      this.notes = await NoteService.getNotes();
-    } catch (err) {
-      this.error = err.message;
-    }
+    this.notes = await getNotes();
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
