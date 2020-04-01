@@ -21,13 +21,11 @@
         </div>
       </div>
     </div>
-
     <hr>
-
     <p v-if="error" class="error">{{ error }}</p>
     <div class="columns is-flex-tablet">
       <div
-        v-for="({ _id, title, text, createdAt:date }) in notes"
+        v-for="({ _id, title, text, createdAt: date }) in notes"
         :key="_id"
         class="column">
         <div class="box">
@@ -42,11 +40,11 @@
 </template>
 
 <script>
+import api from '../api/note';
 import { format } from 'date-fns';
-import NoteServices from '../api/note';
 
 export default {
-  name: 'note-component',
+  name: 'note',
   data: () => ({
     notes: [],
     error: '',
@@ -57,28 +55,23 @@ export default {
     formatDate(date) {
       return format(date, 'MMM do, yyyy');
     },
-    createNote({ _id, title, text, createdAt: date }) {
-      const newNote = {
-        _id,
-        title,
-        text,
-        createdAt: new Date(date)
-      };
-      return newNote;
-    },
     async addNote() {
-      const { data } = await NoteServices.insertNote(this.title, this.text);
-      this.notes.push(this.createNote(data));
+      const { title, text } = this;
+      const res = await api.create({ title, text });
+      const createdAt = new Date(res.data.createdAt);
+      this.notes.push({ ...res.data, createdAt });
       this.title = '';
       this.text = '';
     },
     async deleteNote(id) {
-      await NoteServices.deleteNote(id);
+      await api.remove(id);
       this.notes.pop();
     }
   },
   async created() {
-    this.notes = await NoteServices.getNotes();
+    const res = await api.fetch();
+    this.notes = res;
+    // console.log(res);
   }
 };
 </script>
