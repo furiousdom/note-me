@@ -25,11 +25,11 @@
     <p v-if="error" class="error">{{ error }}</p>
     <div class="columns is-flex-tablet">
       <div
-        v-for="({ _id, title, text, createdAt: date }) in notes"
+        v-for="({ _id, title, text, createdAt: date }, index) in notes"
         :key="_id"
         class="column">
         <div class="box">
-          <a @click="deleteNote(_id)" class="delete is-pulled-right"></a>
+          <a @click="deleteNote(_id, index)" class="delete is-pulled-right"></a>
           <p class="title">{{ title }}</p>
           <p class="text">{{ text }}</p>
           <div class="is-size-7 is-pulled-right">{{ formatDate(date) }}</div>
@@ -63,15 +63,13 @@ export default {
       this.title = '';
       this.text = '';
     },
-    async deleteNote(id) {
+    async deleteNote(id, index) {
       await api.remove(id);
-      this.notes.pop();
+      this.notes.splice(index, 1);
     }
   },
   async created() {
-    const res = await api.fetch();
-    this.notes = res;
-    // console.log(res);
+    this.notes = await api.fetch();
   }
 };
 </script>
