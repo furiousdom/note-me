@@ -1,4 +1,15 @@
+# Editors
+.vscode
+
+# Dependencies
 node_modules
-/client/node_modules
-/client/dist
-/client/src/components/OldCodeSaver.vue
+
+# Configuration
+.env
+
+# Build artifacts
+dist/
+build/
+
+# General
+.DS_Store
