@@ -1,8 +1,7 @@
 {
   "name": "note-me",
   "version": "1.0.0",
-  "description": "Note taking web app.",
-  "main": "index.js",
+  "description": "Full stack web app for taking notes.",
   "scripts": {
     "start": "node server/index.js",
     "dev:server": "nodemon server/index.js",
