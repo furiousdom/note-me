@@ -1,17 +1,20 @@
 <template>
-  <div id="app">
-    <NoteComponent />
-  </div>
+  <v-app id="inspire">
+    <v-app-bar app>
+      <v-toolbar-title>NoteMe</v-toolbar-title>
+    </v-app-bar>
+    <v-main>
+      <Board />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import NoteComponent from './components/Note.vue';
+import Board from './components/Board';
 
 export default {
   name: 'app',
-  components: {
-    NoteComponent
-  }
+  components: { Board }
 };
 </script>
 
