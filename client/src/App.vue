@@ -3,7 +3,6 @@
     <v-app-bar app>
       <v-toolbar-title>NoteMe</v-toolbar-title>
     </v-app-bar>
-
     <v-main>
       <Board />
     </v-main>
@@ -15,9 +14,7 @@ import Board from './components/Board';
 
 export default {
   name: 'app',
-  components: {
-    Board
-  }
+  components: { Board }
 };
 </script>
 
